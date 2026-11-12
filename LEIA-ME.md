@@ -19,7 +19,7 @@ musica/
 │   ├── letras.js                   ← ★ ÚNICO ARQUIVO A EDITAR: títulos, links e LETRAS
 │   ├── app.js                      ← monta a lista e a letra a partir de letras.js
 │   ├── estilo.css                  ← estilo compartilhado por todas as páginas
-│   ├── logo-seeduc.png             ← LOGO (ver "Logo oficial" abaixo)
+│   ├── logo-seeduc.png             ← logo oficial da SEEDUC (otimizado)
 │   └── favicon.svg
 ├── qrcodes/
 │   ├── index.html                  ← folha com o QR geral + 9 QR codes para imprimir
@@ -56,10 +56,11 @@ Os QR codes só funcionam depois da publicação, pois apontam para o domínio.
 
 ## Logo oficial
 
-O arquivo `musica/assets/logo-seeduc.png` é um **logo provisório** gerado
-automaticamente. Substitua pelo logo oficial da SEEDUC mantendo o mesmo nome
-de arquivo (`logo-seeduc.png`, de preferência com fundo transparente e largura
-mínima de 600 px). Todas as páginas e a folha de QR codes usam esse único arquivo.
+`musica/assets/logo-seeduc.png` é o logo oficial da Secretaria de Educação
+(baixado de cecapescs.com.br/logos/logo-seeduc.png), convertido de JPEG CMYK
+para PNG com fundo transparente, 640 px de largura e sem perfil de cor (ficou
+com cerca de 21 KB em vez de 1,2 MB). Para trocar o logo, substitua o arquivo
+mantendo o mesmo nome. Todas as páginas e a folha de QR codes usam esse arquivo.
 
 ## Letras das músicas (como cadastrar)
 

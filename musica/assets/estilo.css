@@ -100,7 +100,7 @@ body {
   gap: 12px;
   flex-wrap: wrap;
 }
-.logo { height: 58px; width: auto; max-width: 70%; object-fit: contain; display: block; }
+.logo { height: 124px; width: auto; max-width: 60%; object-fit: contain; display: block; }
 .logo-link { display: inline-block; line-height: 0; }
 .selo {
   font-size: .8rem;
@@ -286,7 +286,7 @@ h1 {
   margin: 0 -18px 14px;
   padding: 10px;
 }
-.qr-logo { height: 40px; background: #fff; border-radius: 10px; padding: 4px 10px; }
+.qr-logo { height: 92px; background: #fff; border-radius: 10px; padding: 5px 10px; }
 .qr-estilo { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--cor); }
 .qr-cartao h2 { font-size: 1.3rem; font-weight: 900; margin: 6px 0 2px; line-height: 1.15; }
 .qr-artista { margin: 0 0 10px; color: var(--texto-suave); font-weight: 700; }
@@ -297,6 +297,7 @@ h1 {
 @media (max-width: 520px) {
   body { padding: 12px 8px 32px; }
   .cartao { padding: 16px 14px 20px; border-radius: 22px; }
+  .logo { height: 100px; }
   .letra { padding: 18px 14px; font-size: calc(1.15rem * var(--escala)); }
   .rodape { flex-direction: column; text-align: center; }
   .item { grid-template-columns: auto 1fr auto; }
