@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stand by Me — Ben E. King | Músicas SEEDUC</title>
+  <meta name="description" content="Rock internacional: Stand by Me, de Ben E. King. Projeto Músicas com Letras — SEEDUC São Caetano do Sul.">
+  <meta property="og:title" content="Stand by Me — Ben E. King">
+  <meta property="og:description" content="Rock internacional · Músicas com Letras · SEEDUC São Caetano do Sul">
+  <meta property="og:image" content="https://cecapescs.com.br/musica/assets/logo-seeduc.png">
+  <meta name="theme-color" content="#3b82f6">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/estilo.css">
+  <style>
+    :root { --cor: #3b82f6; --cor2: #06b6d4; }
+  </style>
+</head>
+<body>
+  <div class="fundo" aria-hidden="true">
+    <span class="nota n1" aria-hidden="true">♪</span>
+    <span class="nota n2" aria-hidden="true">♫</span>
+    <span class="nota n3" aria-hidden="true">♩</span>
+    <span class="nota n4" aria-hidden="true">♬</span>
+    <span class="nota n5" aria-hidden="true">♪</span>
+    <span class="nota n6" aria-hidden="true">♫</span>
+    <span class="nota n7" aria-hidden="true">♩</span>
+    <span class="nota n8" aria-hidden="true">♬</span>
+    <span class="nota n9" aria-hidden="true">♪</span>
+    <span class="nota n10" aria-hidden="true">♫</span>
+    <span class="nota n11" aria-hidden="true">♬</span>
+    <span class="nota n12" aria-hidden="true">♪</span>
+  </div>
+
+  <main class="cartao">
+    <header class="topo">
+      <a href="../" class="logo-link" title="Voltar para a lista de músicas">
+        <img src="../assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
+      </a>
+      <span class="selo">Música 5 de 9</span>
+    </header>
+
+    <div class="cabecalho">
+      <span class="estilo">🎤 Rock internacional</span>
+      <h1>Stand by Me</h1>
+      <p class="artista">Ben E. King</p>
+    </div>
+
+    <div class="ferramentas" role="toolbar" aria-label="Opções de leitura">
+      <button type="button" onclick="mudarFonte(-1)" title="Diminuir letra">A−</button>
+      <button type="button" onclick="mudarFonte(1)" title="Aumentar letra">A+</button>
+      <button type="button" onclick="window.print()" title="Imprimir">🖨️ Imprimir</button>
+      <button type="button" onclick="compartilhar()" title="Compartilhar">📤 Compartilhar</button>
+    </div>
+
+      <section class="letra letra-externa" id="letra" aria-label="Letra da música">
+        <!--
+          ============================================================
+          LETRA DESTA MÚSICA
+          A letra é protegida por direitos autorais e por isso não foi
+          incluída automaticamente. Se a escola tiver autorização para
+          publicá-la, apague o bloco <div class="aviso-letra"> abaixo e
+          cole a letra no lugar, usando <p> para cada estrofe e <br>
+          entre os versos, como no exemplo:
+
+          <p>
+            Primeiro verso<br>
+            Segundo verso<br>
+            Terceiro verso
+          </p>
+          ============================================================
+        -->
+        <div class="aviso-letra">
+          <div class="aviso-icone">🎤</div>
+          <p>A letra desta música é protegida por direitos autorais.<br>
+          Toque no botão para abrir a letra oficial e cantar junto!</p>
+          <a class="botao" href="https://www.letras.mus.br/king-ben-e/21189/traducao.html" target="_blank" rel="noopener">
+            Ver letra e tradução no Letras.mus.br ↗
+          </a>
+        </div>
+      </section>
+
+    <footer class="rodape">
+      <div class="qr">
+        <img src="qrcode.png" alt="QR Code desta página" width="120" height="120">
+        <small>Aponte a câmera para abrir esta página</small>
+      </div>
+      <div class="rodape-texto">
+        <a class="link-externo" href="https://www.letras.mus.br/king-ben-e/21189/traducao.html" target="_blank" rel="noopener">Ver letra e tradução no Letras.mus.br ↗</a>
+        <a class="link-externo" href="../">🎵 Todas as músicas</a>
+        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Controle do tamanho da letra (guardado no navegador)
+    var tamanho = Number(localStorage.getItem('tamanhoLetra') || 0);
+    function aplicarFonte() {
+      document.documentElement.style.setProperty('--escala', (1 + tamanho * 0.15).toFixed(2));
+      localStorage.setItem('tamanhoLetra', tamanho);
+    }
+    function mudarFonte(delta) {
+      tamanho = Math.max(-2, Math.min(4, tamanho + delta));
+      aplicarFonte();
+    }
+    aplicarFonte();
+
+    // Compartilhar (usa o menu nativo do celular quando disponível)
+    function compartilhar() {
+      var dados = { title: document.title, text: 'Stand by Me — Ben E. King', url: 'https://cecapescs.com.br/musica/stand-by-me/' };
+      if (navigator.share) {
+        navigator.share(dados).catch(function () {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(dados.url).then(function () {
+          alert('Link copiado: ' + dados.url);
+        });
+      } else {
+        prompt('Copie o link desta página:', dados.url);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peneirei Fubá — Cantiga popular (domínio público) | Músicas SEEDUC</title>
+  <meta name="description" content="Brincadeira cantada: Peneirei Fubá, de Cantiga popular (domínio público). Projeto Músicas com Letras — SEEDUC São Caetano do Sul.">
+  <meta property="og:title" content="Peneirei Fubá — Cantiga popular (domínio público)">
+  <meta property="og:description" content="Brincadeira cantada · Músicas com Letras · SEEDUC São Caetano do Sul">
+  <meta property="og:image" content="https://cecapescs.com.br/musica/assets/logo-seeduc.png">
+  <meta name="theme-color" content="#22c55e">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/estilo.css">
+  <style>
+    :root { --cor: #22c55e; --cor2: #facc15; }
+  </style>
+</head>
+<body>
+  <div class="fundo" aria-hidden="true">
+    <span class="nota n1" aria-hidden="true">♪</span>
+    <span class="nota n2" aria-hidden="true">♫</span>
+    <span class="nota n3" aria-hidden="true">♩</span>
+    <span class="nota n4" aria-hidden="true">♬</span>
+    <span class="nota n5" aria-hidden="true">♪</span>
+    <span class="nota n6" aria-hidden="true">♫</span>
+    <span class="nota n7" aria-hidden="true">♩</span>
+    <span class="nota n8" aria-hidden="true">♬</span>
+    <span class="nota n9" aria-hidden="true">♪</span>
+    <span class="nota n10" aria-hidden="true">♫</span>
+    <span class="nota n11" aria-hidden="true">♬</span>
+    <span class="nota n12" aria-hidden="true">♪</span>
+  </div>
+
+  <main class="cartao">
+    <header class="topo">
+      <a href="../" class="logo-link" title="Voltar para a lista de músicas">
+        <img src="../assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
+      </a>
+      <span class="selo">Música 9 de 9</span>
+    </header>
+
+    <div class="cabecalho">
+      <span class="estilo">🎶 Brincadeira cantada</span>
+      <h1>Peneirei Fubá</h1>
+      <p class="artista">Cantiga popular (domínio público)</p>
+    </div>
+
+    <div class="ferramentas" role="toolbar" aria-label="Opções de leitura">
+      <button type="button" onclick="mudarFonte(-1)" title="Diminuir letra">A−</button>
+      <button type="button" onclick="mudarFonte(1)" title="Aumentar letra">A+</button>
+      <button type="button" onclick="window.print()" title="Imprimir">🖨️ Imprimir</button>
+      <button type="button" onclick="compartilhar()" title="Compartilhar">📤 Compartilhar</button>
+    </div>
+
+      <section class="letra" id="letra" aria-label="Letra da música">
+        <p>
+          Peneirou fubá,<br>
+          O fubá caiu.<br>
+          Tornei a peneirar,<br>
+          O fubá subiu.
+        </p>
+        <p>
+          Lá vêm as famílias,<br>
+          Todas animadas,<br>
+          Com a peneira na mão.<br>
+          Não deixe cair o fubá no chão!
+        </p>
+        <p>
+          Peneirou fubá,<br>
+          O fubá caiu.<br>
+          Tornei a peneirar,<br>
+          O fubá subiu.
+        </p>
+      </section>
+
+    <footer class="rodape">
+      <div class="qr">
+        <img src="qrcode.png" alt="QR Code desta página" width="120" height="120">
+        <small>Aponte a câmera para abrir esta página</small>
+      </div>
+      <div class="rodape-texto">
+        <a class="link-externo" href="../">🎵 Todas as músicas</a>
+        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Controle do tamanho da letra (guardado no navegador)
+    var tamanho = Number(localStorage.getItem('tamanhoLetra') || 0);
+    function aplicarFonte() {
+      document.documentElement.style.setProperty('--escala', (1 + tamanho * 0.15).toFixed(2));
+      localStorage.setItem('tamanhoLetra', tamanho);
+    }
+    function mudarFonte(delta) {
+      tamanho = Math.max(-2, Math.min(4, tamanho + delta));
+      aplicarFonte();
+    }
+    aplicarFonte();
+
+    // Compartilhar (usa o menu nativo do celular quando disponível)
+    function compartilhar() {
+      var dados = { title: document.title, text: 'Peneirei Fubá — Cantiga popular (domínio público)', url: 'https://cecapescs.com.br/musica/peneirei-fuba/' };
+      if (navigator.share) {
+        navigator.share(dados).catch(function () {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(dados.url).then(function () {
+          alert('Link copiado: ' + dados.url);
+        });
+      } else {
+        prompt('Copie o link desta página:', dados.url);
+      }
+    }
+  </script>
+</body>
+</html>
