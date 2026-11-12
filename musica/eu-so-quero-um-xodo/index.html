@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eu Só Quero um Xodó — Dominguinhos | Músicas SEEDUC</title>
   <meta name="description" content="Forró: Eu Só Quero um Xodó, de Dominguinhos. Projeto Músicas com Letras — SEEDUC São Caetano do Sul.">
-  <meta property="og:title" content="Eu Só Quero um Xodó — Dominguinhos">
-  <meta property="og:description" content="Forró · Músicas com Letras · SEEDUC São Caetano do Sul">
+  <meta property="og:title" content="Eu Só Quero um Xodó — Dominguinhos | Músicas SEEDUC">
   <meta property="og:image" content="https://cecapescs.com.br/musica/assets/logo-seeduc.png">
   <meta name="theme-color" content="#f97316">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -39,88 +38,17 @@
       <a href="../" class="logo-link" title="Voltar para a lista de músicas">
         <img src="../assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
       </a>
-      <span class="selo">Música 2 de 9</span>
+      <span class="selo" id="selo">Música 2 de 9</span>
     </header>
 
-    <div class="cabecalho">
-      <span class="estilo">🪗 Forró</span>
-      <h1>Eu Só Quero um Xodó</h1>
-      <p class="artista">Dominguinhos</p>
+    <!-- O conteúdo (título, letra, QR) é montado por assets/app.js a partir de assets/letras.js -->
+    <div id="conteudo" class="conteudo">
+      <noscript><p>Ative o JavaScript para ver a letra, ou <a href="../">volte à lista</a>.</p></noscript>
     </div>
-
-    <div class="ferramentas" role="toolbar" aria-label="Opções de leitura">
-      <button type="button" onclick="mudarFonte(-1)" title="Diminuir letra">A−</button>
-      <button type="button" onclick="mudarFonte(1)" title="Aumentar letra">A+</button>
-      <button type="button" onclick="window.print()" title="Imprimir">🖨️ Imprimir</button>
-      <button type="button" onclick="compartilhar()" title="Compartilhar">📤 Compartilhar</button>
-    </div>
-
-      <section class="letra letra-externa" id="letra" aria-label="Letra da música">
-        <!--
-          ============================================================
-          LETRA DESTA MÚSICA
-          A letra é protegida por direitos autorais e por isso não foi
-          incluída automaticamente. Se a escola tiver autorização para
-          publicá-la, apague o bloco <div class="aviso-letra"> abaixo e
-          cole a letra no lugar, usando <p> para cada estrofe e <br>
-          entre os versos, como no exemplo:
-
-          <p>
-            Primeiro verso<br>
-            Segundo verso<br>
-            Terceiro verso
-          </p>
-          ============================================================
-        -->
-        <div class="aviso-letra">
-          <div class="aviso-icone">🪗</div>
-          <p>A letra desta música é protegida por direitos autorais.<br>
-          Toque no botão para abrir a letra oficial e cantar junto!</p>
-          <a class="botao" href="https://www.letras.mus.br/dominguinhos/357861/" target="_blank" rel="noopener">
-            Ver letra completa no Letras.mus.br ↗
-          </a>
-        </div>
-      </section>
-
-    <footer class="rodape">
-      <div class="qr">
-        <img src="qrcode.png" alt="QR Code desta página" width="120" height="120">
-        <small>Aponte a câmera para abrir esta página</small>
-      </div>
-      <div class="rodape-texto">
-        <a class="link-externo" href="https://www.letras.mus.br/dominguinhos/357861/" target="_blank" rel="noopener">Ver letra completa no Letras.mus.br ↗</a>
-        <a class="link-externo" href="../">🎵 Todas as músicas</a>
-        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
-      </div>
-    </footer>
   </main>
 
-  <script>
-    // Controle do tamanho da letra (guardado no navegador)
-    var tamanho = Number(localStorage.getItem('tamanhoLetra') || 0);
-    function aplicarFonte() {
-      document.documentElement.style.setProperty('--escala', (1 + tamanho * 0.15).toFixed(2));
-      localStorage.setItem('tamanhoLetra', tamanho);
-    }
-    function mudarFonte(delta) {
-      tamanho = Math.max(-2, Math.min(4, tamanho + delta));
-      aplicarFonte();
-    }
-    aplicarFonte();
-
-    // Compartilhar (usa o menu nativo do celular quando disponível)
-    function compartilhar() {
-      var dados = { title: document.title, text: 'Eu Só Quero um Xodó — Dominguinhos', url: 'https://cecapescs.com.br/musica/eu-so-quero-um-xodo/' };
-      if (navigator.share) {
-        navigator.share(dados).catch(function () {});
-      } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(dados.url).then(function () {
-          alert('Link copiado: ' + dados.url);
-        });
-      } else {
-        prompt('Copie o link desta página:', dados.url);
-      }
-    }
-  </script>
+  <script src="../assets/letras.js"></script>
+  <script src="../assets/app.js"></script>
+  <script>montarPagina('conteudo', 'eu-so-quero-um-xodo');</script>
 </body>
 </html>

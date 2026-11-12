@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # ferramentas/gerar_paginas.py
-# Gera as páginas HTML de cada música, os QR codes e a folha de impressão.
+# Gera as páginas HTML (índice e uma por música), os QR codes e a folha de impressão.
+# As letras NÃO ficam aqui: estão em musica/assets/letras.js (único arquivo a editar).
+# A lista abaixo serve só para nomes de pastas, cores e QR codes.
 # Uso (opcional, só para regenerar): python3 ferramentas/gerar_paginas.py
 # Requer: pip install segno pillow
 
@@ -75,13 +77,7 @@ MUSICAS = [
         "n": 9, "slug": "peneirei-fuba", "estilo": "Brincadeira cantada",
         "titulo": "Peneirei Fubá", "artista": "Cantiga popular (domínio público)",
         "cor": "#22c55e", "cor2": "#facc15", "emoji": "🎶",
-        "link": None, "link_txt": None,
-        # Versão enviada pelo professor (cantiga tradicional, domínio público)
-        "letra": [
-            ["Peneirou fubá,", "O fubá caiu.", "Tornei a peneirar,", "O fubá subiu."],
-            ["Lá vêm as famílias,", "Todas animadas,", "Com a peneira na mão.", "Não deixe cair o fubá no chão!"],
-            ["Peneirou fubá,", "O fubá caiu.", "Tornei a peneirar,", "O fubá subiu."],
-        ],
+        "link": None, "link_txt": None, "letra": None,
     },
 ]
 
@@ -96,74 +92,38 @@ def notas_html():
     return "\n    ".join(partes)
 
 
-def bloco_letra(m):
-    if m["letra"]:
-        estrofes = []
-        for est in m["letra"]:
-            linhas = "<br>\n          ".join(html.escape(l) for l in est)
-            estrofes.append(f"        <p>\n          {linhas}\n        </p>")
-        corpo = "\n".join(estrofes)
-        return f"""      <section class="letra" id="letra" aria-label="Letra da música">
-{corpo}
-      </section>"""
-    # Música com direitos autorais: a letra não é reproduzida aqui.
-    return f"""      <section class="letra letra-externa" id="letra" aria-label="Letra da música">
-        <!--
-          ============================================================
-          LETRA DESTA MÚSICA
-          A letra é protegida por direitos autorais e por isso não foi
-          incluída automaticamente. Se a escola tiver autorização para
-          publicá-la, apague o bloco <div class="aviso-letra"> abaixo e
-          cole a letra no lugar, usando <p> para cada estrofe e <br>
-          entre os versos, como no exemplo:
 
-          <p>
-            Primeiro verso<br>
-            Segundo verso<br>
-            Terceiro verso
-          </p>
-          ============================================================
-        -->
-        <div class="aviso-letra">
-          <div class="aviso-icone">{m["emoji"]}</div>
-          <p>A letra desta música é protegida por direitos autorais.<br>
-          Toque no botão para abrir a letra oficial e cantar junto!</p>
-          <a class="botao" href="{m["link"]}" target="_blank" rel="noopener">
-            {m["link_txt"]} ↗
-          </a>
-        </div>
-      </section>"""
-
-
-def pagina_musica(m):
-    url = f"{DOMINIO}{m['slug']}/"
-    titulo = html.escape(m["titulo"])
-    artista = html.escape(m["artista"])
-    estilo = html.escape(m["estilo"])
-    link_rodape = ""
-    if m["link"]:
-        link_rodape = f"""        <a class="link-externo" href="{m["link"]}" target="_blank" rel="noopener">{m["link_txt"]} ↗</a>\n"""
+def cabeca_html(titulo_pagina, descricao, prefixo, cor, cor2):
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{titulo} — {artista} | Músicas SEEDUC</title>
-  <meta name="description" content="{estilo}: {titulo}, de {artista}. Projeto Músicas com Letras — SEEDUC São Caetano do Sul.">
-  <meta property="og:title" content="{titulo} — {artista}">
-  <meta property="og:description" content="{estilo} · Músicas com Letras · SEEDUC São Caetano do Sul">
+  <title>{titulo_pagina}</title>
+  <meta name="description" content="{descricao}">
+  <meta property="og:title" content="{titulo_pagina}">
   <meta property="og:image" content="{DOMINIO}assets/logo-seeduc.png">
-  <meta name="theme-color" content="{m['cor']}">
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="{cor}">
+  <link rel="icon" href="{prefixo}assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/estilo.css">
+  <link rel="stylesheet" href="{prefixo}assets/estilo.css">
   <style>
-    :root {{ --cor: {m['cor']}; --cor2: {m['cor2']}; }}
+    :root {{ --cor: {cor}; --cor2: {cor2}; }}
   </style>
 </head>
-<body>
+"""
+
+
+def pagina_musica(m):
+    titulo = html.escape(m["titulo"])
+    artista = html.escape(m["artista"])
+    estilo = html.escape(m["estilo"])
+    cabeca = cabeca_html(f"{titulo} — {artista} | Músicas SEEDUC",
+                         f"{estilo}: {titulo}, de {artista}. Projeto Músicas com Letras — SEEDUC São Caetano do Sul.",
+                         "../", m["cor"], m["cor2"])
+    return f"""{cabeca}<body>
   <div class="fundo" aria-hidden="true">
     {notas_html()}
   </div>
@@ -173,127 +133,50 @@ def pagina_musica(m):
       <a href="../" class="logo-link" title="Voltar para a lista de músicas">
         <img src="../assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
       </a>
-      <span class="selo">Música {m['n']} de {len(MUSICAS)}</span>
+      <span class="selo" id="selo">Música {m['n']} de {len(MUSICAS)}</span>
     </header>
 
-    <div class="cabecalho">
-      <span class="estilo">{m['emoji']} {estilo}</span>
-      <h1>{titulo}</h1>
-      <p class="artista">{artista}</p>
+    <!-- O conteúdo (título, letra, QR) é montado por assets/app.js a partir de assets/letras.js -->
+    <div id="conteudo" class="conteudo">
+      <noscript><p>Ative o JavaScript para ver a letra, ou <a href="../">volte à lista</a>.</p></noscript>
     </div>
-
-    <div class="ferramentas" role="toolbar" aria-label="Opções de leitura">
-      <button type="button" onclick="mudarFonte(-1)" title="Diminuir letra">A−</button>
-      <button type="button" onclick="mudarFonte(1)" title="Aumentar letra">A+</button>
-      <button type="button" onclick="window.print()" title="Imprimir">🖨️ Imprimir</button>
-      <button type="button" onclick="compartilhar()" title="Compartilhar">📤 Compartilhar</button>
-    </div>
-
-{bloco_letra(m)}
-
-    <footer class="rodape">
-      <div class="qr">
-        <img src="qrcode.png" alt="QR Code desta página" width="120" height="120">
-        <small>Aponte a câmera para abrir esta página</small>
-      </div>
-      <div class="rodape-texto">
-{link_rodape}        <a class="link-externo" href="../">🎵 Todas as músicas</a>
-        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
-      </div>
-    </footer>
   </main>
 
-  <script>
-    // Controle do tamanho da letra (guardado no navegador)
-    var tamanho = Number(localStorage.getItem('tamanhoLetra') || 0);
-    function aplicarFonte() {{
-      document.documentElement.style.setProperty('--escala', (1 + tamanho * 0.15).toFixed(2));
-      localStorage.setItem('tamanhoLetra', tamanho);
-    }}
-    function mudarFonte(delta) {{
-      tamanho = Math.max(-2, Math.min(4, tamanho + delta));
-      aplicarFonte();
-    }}
-    aplicarFonte();
-
-    // Compartilhar (usa o menu nativo do celular quando disponível)
-    function compartilhar() {{
-      var dados = {{ title: document.title, text: '{titulo} — {artista}', url: '{url}' }};
-      if (navigator.share) {{
-        navigator.share(dados).catch(function () {{}});
-      }} else if (navigator.clipboard) {{
-        navigator.clipboard.writeText(dados.url).then(function () {{
-          alert('Link copiado: ' + dados.url);
-        }});
-      }} else {{
-        prompt('Copie o link desta página:', dados.url);
-      }}
-    }}
-  </script>
+  <script src="../assets/letras.js"></script>
+  <script src="../assets/app.js"></script>
+  <script>montarPagina('conteudo', '{m['slug']}');</script>
 </body>
 </html>
 """
 
 
 def pagina_indice():
-    itens = []
-    for m in MUSICAS:
-        itens.append(f"""      <a class="item" href="{m['slug']}/" style="--cor: {m['cor']}; --cor2: {m['cor2']};">
-        <span class="num">{m['n']}</span>
-        <span class="emoji">{m['emoji']}</span>
-        <span class="info">
-          <strong>{html.escape(m['titulo'])}</strong>
-          <span>{html.escape(m['artista'])}</span>
-          <em>{html.escape(m['estilo'])}</em>
-        </span>
-        <span class="seta">›</span>
-      </a>""")
-    lista = "\n".join(itens)
-    return f"""<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Músicas com Letras | SEEDUC São Caetano do Sul</title>
-  <meta name="description" content="Repertório do projeto Músicas com Letras da SEEDUC São Caetano do Sul: samba, forró, sertanejo, rock, pop, MPB e brincadeira cantada.">
-  <meta name="theme-color" content="#2563eb">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/estilo.css">
-  <style>
-    :root {{ --cor: #2563eb; --cor2: #ec4899; }}
-  </style>
-</head>
-<body>
+    cabeca = cabeca_html("Músicas com Letras | SEEDUC São Caetano do Sul",
+                         "Repertório do projeto Músicas com Letras da SEEDUC São Caetano do Sul: samba, forró, sertanejo, rock, pop, MPB e brincadeira cantada.",
+                         "", "#2563eb", "#ec4899")
+    return f"""{cabeca}<body>
   <div class="fundo" aria-hidden="true">
     {notas_html()}
   </div>
 
   <main class="cartao">
     <header class="topo">
-      <img src="assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
-      <span class="selo">{len(MUSICAS)} músicas</span>
+      <a href="#" class="logo-link" title="Lista de músicas">
+        <img src="assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
+      </a>
+      <span class="selo" id="selo">{len(MUSICAS)} músicas</span>
     </header>
 
-    <div class="cabecalho">
-      <span class="estilo">🎵 Repertório</span>
-      <h1>Músicas com Letras</h1>
-      <p class="artista">Escolha uma música para abrir a letra</p>
+    <!-- Lista e letras montadas por assets/app.js a partir de assets/letras.js.
+         Selecionar uma música muda o endereço para #nome-da-musica e mostra a letra. -->
+    <div id="conteudo" class="conteudo">
+      <noscript><p>Ative o JavaScript para ver as músicas.</p></noscript>
     </div>
-
-    <nav class="lista" aria-label="Lista de músicas">
-{lista}
-    </nav>
-
-    <footer class="rodape rodape-simples">
-      <div class="rodape-texto">
-        <a class="link-externo" href="qrcodes/">📱 Folha de QR codes para imprimir</a>
-        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
-      </div>
-    </footer>
   </main>
+
+  <script src="assets/letras.js"></script>
+  <script src="assets/app.js"></script>
+  <script>montarIndice('conteudo');</script>
 </body>
 </html>
 """
@@ -311,7 +194,15 @@ def pagina_qrcodes():
         <img src="{m['slug']}.png" alt="QR Code: {html.escape(m['titulo'])}" class="qr-img">
         <p class="qr-url">{url}</p>
       </article>""")
-    corpo = "\n".join(cartoes)
+    geral = f"""      <article class="qr-cartao qr-geral" style="--cor: #2563eb; --cor2: #ec4899;">
+        <div class="qr-faixa"><img src="../assets/logo-seeduc.png" alt="SEEDUC" class="qr-logo"></div>
+        <div class="qr-estilo">🎵 QR code geral</div>
+        <h2>Músicas com Letras</h2>
+        <p class="qr-artista">Abre a lista completa — toque na música para ver a letra</p>
+        <img src="geral.png" alt="QR Code: lista de músicas" class="qr-img">
+        <p class="qr-url">{DOMINIO}</p>
+      </article>"""
+    corpo = geral + "\n" + "\n".join(cartoes)
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -395,6 +286,9 @@ def main():
 
     (SAIDA / "index.html").write_text(pagina_indice(), encoding="utf-8")
     (qrs / "index.html").write_text(pagina_qrcodes(), encoding="utf-8")
+
+    gerar_qr(DOMINIO, qrs / "geral.png")
+    print(f"OK  QR  geral                      {DOMINIO}")
 
     for m in MUSICAS:
         pasta = SAIDA / m["slug"]

@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peneirei Fubá — Cantiga popular (domínio público) | Músicas SEEDUC</title>
   <meta name="description" content="Brincadeira cantada: Peneirei Fubá, de Cantiga popular (domínio público). Projeto Músicas com Letras — SEEDUC São Caetano do Sul.">
-  <meta property="og:title" content="Peneirei Fubá — Cantiga popular (domínio público)">
-  <meta property="og:description" content="Brincadeira cantada · Músicas com Letras · SEEDUC São Caetano do Sul">
+  <meta property="og:title" content="Peneirei Fubá — Cantiga popular (domínio público) | Músicas SEEDUC">
   <meta property="og:image" content="https://cecapescs.com.br/musica/assets/logo-seeduc.png">
   <meta name="theme-color" content="#22c55e">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -39,81 +38,17 @@
       <a href="../" class="logo-link" title="Voltar para a lista de músicas">
         <img src="../assets/logo-seeduc.png" alt="SEEDUC — Secretaria de Educação de São Caetano do Sul" class="logo">
       </a>
-      <span class="selo">Música 9 de 9</span>
+      <span class="selo" id="selo">Música 9 de 9</span>
     </header>
 
-    <div class="cabecalho">
-      <span class="estilo">🎶 Brincadeira cantada</span>
-      <h1>Peneirei Fubá</h1>
-      <p class="artista">Cantiga popular (domínio público)</p>
+    <!-- O conteúdo (título, letra, QR) é montado por assets/app.js a partir de assets/letras.js -->
+    <div id="conteudo" class="conteudo">
+      <noscript><p>Ative o JavaScript para ver a letra, ou <a href="../">volte à lista</a>.</p></noscript>
     </div>
-
-    <div class="ferramentas" role="toolbar" aria-label="Opções de leitura">
-      <button type="button" onclick="mudarFonte(-1)" title="Diminuir letra">A−</button>
-      <button type="button" onclick="mudarFonte(1)" title="Aumentar letra">A+</button>
-      <button type="button" onclick="window.print()" title="Imprimir">🖨️ Imprimir</button>
-      <button type="button" onclick="compartilhar()" title="Compartilhar">📤 Compartilhar</button>
-    </div>
-
-      <section class="letra" id="letra" aria-label="Letra da música">
-        <p>
-          Peneirou fubá,<br>
-          O fubá caiu.<br>
-          Tornei a peneirar,<br>
-          O fubá subiu.
-        </p>
-        <p>
-          Lá vêm as famílias,<br>
-          Todas animadas,<br>
-          Com a peneira na mão.<br>
-          Não deixe cair o fubá no chão!
-        </p>
-        <p>
-          Peneirou fubá,<br>
-          O fubá caiu.<br>
-          Tornei a peneirar,<br>
-          O fubá subiu.
-        </p>
-      </section>
-
-    <footer class="rodape">
-      <div class="qr">
-        <img src="qrcode.png" alt="QR Code desta página" width="120" height="120">
-        <small>Aponte a câmera para abrir esta página</small>
-      </div>
-      <div class="rodape-texto">
-        <a class="link-externo" href="../">🎵 Todas as músicas</a>
-        <p>Projeto <strong>Músicas com Letras</strong><br>SEEDUC — Secretaria de Educação de São Caetano do Sul</p>
-      </div>
-    </footer>
   </main>
 
-  <script>
-    // Controle do tamanho da letra (guardado no navegador)
-    var tamanho = Number(localStorage.getItem('tamanhoLetra') || 0);
-    function aplicarFonte() {
-      document.documentElement.style.setProperty('--escala', (1 + tamanho * 0.15).toFixed(2));
-      localStorage.setItem('tamanhoLetra', tamanho);
-    }
-    function mudarFonte(delta) {
-      tamanho = Math.max(-2, Math.min(4, tamanho + delta));
-      aplicarFonte();
-    }
-    aplicarFonte();
-
-    // Compartilhar (usa o menu nativo do celular quando disponível)
-    function compartilhar() {
-      var dados = { title: document.title, text: 'Peneirei Fubá — Cantiga popular (domínio público)', url: 'https://cecapescs.com.br/musica/peneirei-fuba/' };
-      if (navigator.share) {
-        navigator.share(dados).catch(function () {});
-      } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(dados.url).then(function () {
-          alert('Link copiado: ' + dados.url);
-        });
-      } else {
-        prompt('Copie o link desta página:', dados.url);
-      }
-    }
-  </script>
+  <script src="../assets/letras.js"></script>
+  <script src="../assets/app.js"></script>
+  <script>montarPagina('conteudo', 'peneirei-fuba');</script>
 </body>
 </html>

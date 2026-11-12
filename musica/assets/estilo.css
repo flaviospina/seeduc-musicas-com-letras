@@ -314,3 +314,50 @@ h1 {
   .qr-cartao { border-style: dashed; }
   a { color: inherit; }
 }
+
+/* ---------- Versão com letras carregadas de assets/letras.js ---------- */
+.conteudo.trocando { animation: aparecer .35s ease-out both; }
+
+.voltar {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--cor);
+  font-weight: 800;
+  text-decoration: none;
+  font-size: .95rem;
+}
+.voltar:hover { text-decoration: underline; }
+
+.navegacao {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+}
+.nav-btn {
+  flex: 1;
+  text-decoration: none;
+  color: var(--texto);
+  font-weight: 800;
+  font-size: .9rem;
+  background: #f1f5f9;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  transition: border-color .15s, background .15s;
+}
+.nav-btn:hover { border-color: var(--cor); background: color-mix(in srgb, var(--cor) 10%, white); }
+.nav-prox { text-align: right; }
+
+.bloco-letra .letra-traducao { display: none; margin-top: 12px; border-left-color: var(--cor2); }
+.bloco-letra.mostrar-traducao .letra-original { display: none; }
+.bloco-letra.mostrar-traducao .letra-traducao { display: block; }
+
+.dica-admin { font-size: .75rem !important; opacity: .7; margin-top: 16px !important; }
+.dica-admin code { background: #f1f5f9; padding: 1px 5px; border-radius: 5px; }
+
+.qr-cartao.qr-geral { grid-column: 1 / -1; max-width: 420px; margin: 0 auto 6px; border: 3px solid var(--cor); }
+
+@media print {
+  .navegacao, .voltar, .dica-admin { display: none !important; }
+}

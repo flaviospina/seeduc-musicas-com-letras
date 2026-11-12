@@ -1,20 +1,29 @@
 # Músicas com Letras — SEEDUC São Caetano do Sul
 
-Páginas HTML estáticas (uma por música) com logo da SEEDUC, fundo animado com
-notas musicais, controle de tamanho de letra, botão de impressão, botão de
-compartilhar e QR code de acesso. Publicação em `https://cecapescs.com.br/musica/`.
+Site estático com logo da SEEDUC, fundo animado com notas musicais, controle de
+tamanho de letra, impressão, compartilhamento e QR codes. Publicação em
+`https://cecapescs.com.br/musica/`.
+
+**Como funciona:** o **QR code geral** abre a página principal, que carrega todas
+as músicas do arquivo `assets/letras.js`. Ao tocar em uma música, a letra aparece
+na mesma página (endereço muda para `#nome-da-musica`), com botões de música
+anterior/próxima e "Todas as músicas". Cada música também tem um endereço e um QR
+code próprios (`musica/<pasta>/`), que mostram só aquela letra.
 
 ## Estrutura
 
 ```
 musica/
-├── index.html                      ← lista das 9 músicas
+├── index.html                      ← página principal: lista + letra da música escolhida
 ├── assets/
+│   ├── letras.js                   ← ★ ÚNICO ARQUIVO A EDITAR: títulos, links e LETRAS
+│   ├── app.js                      ← monta a lista e a letra a partir de letras.js
 │   ├── estilo.css                  ← estilo compartilhado por todas as páginas
 │   ├── logo-seeduc.png             ← LOGO (ver "Logo oficial" abaixo)
 │   └── favicon.svg
 ├── qrcodes/
-│   ├── index.html                  ← folha com os 9 QR codes para imprimir/recortar
+│   ├── index.html                  ← folha com o QR geral + 9 QR codes para imprimir
+│   ├── geral.png                   ← QR code GERAL (abre a lista de músicas)
 │   └── <musica>.png                ← um PNG de QR code por música
 ├── canta-canta-minha-gente/        ← 1. Samba — Martinho da Vila
 ├── eu-so-quero-um-xodo/            ← 2. Forró — Dominguinhos
@@ -29,8 +38,8 @@ musica/
     └── qrcode.png
 ```
 
-Cada pasta de música contém `index.html` (a página) e `qrcode.png` (QR code que
-aponta para `https://cecapescs.com.br/musica/<pasta>/`).
+Cada pasta de música contém `index.html` (página individual, que lê a letra de
+`assets/letras.js`) e `qrcode.png` (aponta para `https://cecapescs.com.br/musica/<pasta>/`).
 
 ## Como publicar (cPanel, sem terminal)
 
@@ -41,7 +50,7 @@ aponta para `https://cecapescs.com.br/musica/<pasta>/`).
 4. Teste em `https://cecapescs.com.br/musica/` e em uma música, por exemplo
    `https://cecapescs.com.br/musica/peneirei-fuba/`.
 5. Abra `https://cecapescs.com.br/musica/qrcodes/` e clique em **Imprimir folha**
-   para gerar os cartões com QR code.
+   para gerar os cartões: o **QR geral** (lista completa) e um por música.
 
 Os QR codes só funcionam depois da publicação, pois apontam para o domínio.
 
@@ -52,24 +61,37 @@ automaticamente. Substitua pelo logo oficial da SEEDUC mantendo o mesmo nome
 de arquivo (`logo-seeduc.png`, de preferência com fundo transparente e largura
 mínima de 600 px). Todas as páginas e a folha de QR codes usam esse único arquivo.
 
-## Letras das músicas
+## Letras das músicas (como cadastrar)
 
-- **Peneirei Fubá** (cantiga popular, domínio público): letra completa na página,
-  na versão enviada.
-- **Demais músicas** (protegidas por direitos autorais): a letra **não** foi
-  incluída. A página mostra um botão "Ver letra completa no Letras.mus.br"
-  (e "Ver letra e tradução" no caso de Stand by Me) que abre a letra oficial.
-  Se a escola tiver autorização para publicar a letra, abra o `index.html` da
-  música no editor do cPanel: dentro de `<section class="letra ...">` há um
-  comentário explicando onde colar a letra (um `<p>` por estrofe, `<br>` entre
-  os versos). Ao colar, apague o bloco `<div class="aviso-letra">`.
+Todas as letras ficam em **`musica/assets/letras.js`**. No cPanel, abra o arquivo
+com **Editar** (Gerenciador de Arquivos), localize a música e cole a letra entre as
+crases do campo `letra`:
+
+```js
+letra: `Primeiro verso da estrofe 1
+Segundo verso da estrofe 1
+
+Primeiro verso da estrofe 2
+Segundo verso da estrofe 2`
+```
+
+Regras: um verso por linha, uma linha em branco entre estrofes, e não usar o
+caractere crase ( ` ) dentro da letra. Salve e recarregue a página: a letra
+aparece na página principal e na página individual, sem mais nada a fazer.
+
+- **Peneirei Fubá** (cantiga popular, domínio público) já está preenchida.
+- As demais músicas estão com `letra` vazia. Enquanto estiverem vazias, a página
+  mostra o botão "Ver letra completa no Letras.mus.br" com o link oficial. A
+  decisão de publicar as letras protegidas, com base na finalidade educacional
+  e sem fins comerciais, é da Secretaria; o site já está preparado para isso.
+- **Stand by Me** tem também o campo `traducao`: preenchido, aparece o botão
+  "Ver tradução" que alterna entre original e tradução.
 
 ## Alterar cores, textos ou músicas
 
 - Cores e visual: `musica/assets/estilo.css`. Cada página define `--cor` e
   `--cor2` (as duas cores do gradiente) no `<style>` do `<head>`.
-- Para trocar título, artista ou link de uma música, edite o `index.html` da
-  pasta correspondente.
+- Título, artista, estilo, emoji, cores e link de cada música: `musica/assets/letras.js`.
 - Para regenerar tudo de uma vez (inclusive QR codes), em um computador com
   Python: `pip install segno pillow` e `python3 ferramentas/gerar_paginas.py`.
   O script não sobrescreve `logo-seeduc.png` se o arquivo já existir.
