@@ -1,20 +1,21 @@
 // musica/assets/letras.js
 // ============================================================
-// CADASTRO DAS MÚSICAS E LETRAS
+// CADASTRO DAS MÚSICAS (título, artista, estilo, cores, link)
 //
-// Este é o ÚNICO arquivo que precisa ser editado para colocar as letras.
-// Todas as páginas (índice e páginas individuais) leem daqui.
+// AS LETRAS NÃO FICAM AQUI. Elas ficam em arquivos de texto simples na pasta
+// musica/letras/, um por música, com o mesmo nome da pasta da música:
 //
-// Como preencher o campo "letra":
-//   - Escreva a letra entre as crases ` ` (acento grave), uma linha por verso.
-//   - Separe as estrofes com UMA LINHA EM BRANCO.
-//   - Não use crase ( ` ) dentro da letra.
+//   musica/letras/canta-canta-minha-gente.txt
+//   musica/letras/stand-by-me.txt
+//   musica/letras/stand-by-me.traducao.txt   (opcional: tradução)
+//   ...
 //
-// Campo opcional "traducao": mesma regra, usado em músicas em outro idioma
-// (aparece um botão para alternar entre original e tradução).
+// Basta abrir o .txt no cPanel (Editar) e colar a letra: um verso por linha,
+// uma linha em branco entre as estrofes. Sem aspas, sem crases, sem código.
+// Se o arquivo não existir ou estiver vazio, a página mostra o link oficial.
 //
-// Se "letra" ficar vazia (``), a página mostra um aviso e o link para a
-// letra oficial no Letras.mus.br.
+// Os campos "letra" e "traducao" abaixo são só um fallback: se preenchidos,
+// têm prioridade sobre o arquivo .txt. Deixe vazios (``) para usar o .txt.
 // ============================================================
 
 window.MUSICAS = [
@@ -126,19 +127,6 @@ window.MUSICAS = [
     cor: "#22c55e",
     cor2: "#facc15",
     link: "",
-    letra: `Peneirou fubá,
-O fubá caiu.
-Tornei a peneirar,
-O fubá subiu.
-
-Lá vêm as famílias,
-Todas animadas,
-Com a peneira na mão.
-Não deixe cair o fubá no chão!
-
-Peneirou fubá,
-O fubá caiu.
-Tornei a peneirar,
-O fubá subiu.`
+    letra: ``
   }
 ];

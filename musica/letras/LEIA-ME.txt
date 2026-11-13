@@ -1,0 +1,13 @@
+PASTA DAS LETRAS
+
+Cada música tem um arquivo .txt com o mesmo nome da pasta da música.
+Abra o arquivo no cPanel (botão Editar, codificação utf-8) e cole a letra:
+
+  - um verso por linha
+  - uma linha em branco entre as estrofes
+  - sem aspas, sem crases, sem nenhum código
+
+Salve e recarregue a página da música. Pronto.
+
+Arquivo vazio = a página mostra o botão com o link da letra oficial.
+stand-by-me.traducao.txt = tradução (aparece o botão "Ver tradução").

@@ -4,8 +4,8 @@ Site estático com logo da SEEDUC, fundo animado com notas musicais, controle de
 tamanho de letra, impressão, compartilhamento e QR codes. Publicação em
 `https://cecapescs.com.br/seeduc/musica/`.
 
-**Como funciona:** o **QR code geral** abre a página principal, que carrega todas
-as músicas do arquivo `assets/letras.js`. Ao tocar em uma música, a letra aparece
+**Como funciona:** o **QR code geral** abre a página principal, que carrega a
+lista de `assets/letras.js` e as letras dos arquivos de texto em `letras/`. Ao tocar em uma música, a letra aparece
 na mesma página (endereço muda para `#nome-da-musica`), com botões de música
 anterior/próxima e "Todas as músicas". Cada música também tem um endereço e um QR
 code próprios (`musica/<pasta>/`), que mostram só aquela letra.
@@ -15,8 +15,14 @@ code próprios (`musica/<pasta>/`), que mostram só aquela letra.
 ```
 musica/
 ├── index.html                      ← página principal: lista + letra da música escolhida
+├── letras/                         ← ★ AS LETRAS: um .txt por música (texto puro)
+│   ├── peneirei-fuba.txt           ← já preenchida
+│   ├── canta-canta-minha-gente.txt ← cole a letra aqui (e assim por diante)
+│   ├── stand-by-me.traducao.txt    ← tradução (opcional)
+│   └── LEIA-ME.txt
+├── .htaccess                       ← garante acentuação (UTF-8) nos .txt
 ├── assets/
-│   ├── letras.js                   ← ★ ÚNICO ARQUIVO A EDITAR: títulos, links e LETRAS
+│   ├── letras.js                   ← títulos, artistas, cores e links (sem letras)
 │   ├── app.js                      ← monta a lista e a letra a partir de letras.js
 │   ├── estilo.css                  ← estilo compartilhado por todas as páginas
 │   ├── logo-seeduc.png             ← logo oficial da SEEDUC (otimizado)
@@ -40,7 +46,7 @@ musica/
 ```
 
 Cada pasta de música contém `index.html` (página individual, que lê a letra de
-`assets/letras.js`) e `qrcode.png` (aponta para `https://cecapescs.com.br/seeduc/musica/<pasta>/`).
+`letras/<pasta>.txt`) e `qrcode.png` (aponta para `https://cecapescs.com.br/seeduc/musica/<pasta>/`).
 
 ## Como publicar (cPanel, sem terminal)
 
@@ -65,29 +71,24 @@ mantendo o mesmo nome. Todas as páginas e a folha de QR codes usam esse arquivo
 
 ## Letras das músicas (como cadastrar)
 
-Todas as letras ficam em **`musica/assets/letras.js`**. No cPanel, abra o arquivo
-com **Editar** (Gerenciador de Arquivos), localize a música e cole a letra entre as
-crases do campo `letra`:
+Cada música tem um arquivo de texto em **`musica/letras/`** com o mesmo nome da
+pasta da música (ex.: `musica/letras/evidencias.txt`). Não há código nenhum
+nesses arquivos: é só o texto da letra.
 
-```js
-letra: `Primeiro verso da estrofe 1
-Segundo verso da estrofe 1
-
-Primeiro verso da estrofe 2
-Segundo verso da estrofe 2`
-```
-
-Regras: um verso por linha, uma linha em branco entre estrofes, e não usar o
-caractere crase ( ` ) dentro da letra. Salve e recarregue a página: a letra
-aparece na página principal e na página individual, sem mais nada a fazer.
+1. No cPanel → Gerenciador de Arquivos → `public_html/seeduc/musica/letras/`.
+2. Selecione o `.txt` da música e clique em **Editar** (codificação `utf-8`).
+3. Cole a letra: um verso por linha, uma linha em branco entre as estrofes.
+4. Salve. Recarregue a página da música: a letra aparece na página principal e
+   na página individual. Nada mais precisa ser alterado.
 
 - **Peneirei Fubá** (cantiga popular, domínio público) já está preenchida.
-- As demais músicas estão com `letra` vazia. Enquanto estiverem vazias, a página
-  mostra o botão "Ver letra completa no Letras.mus.br" com o link oficial. A
-  decisão de publicar as letras protegidas, com base na finalidade educacional
-  e sem fins comerciais, é da Secretaria; o site já está preparado para isso.
-- **Stand by Me** tem também o campo `traducao`: preenchido, aparece o botão
-  "Ver tradução" que alterna entre original e tradução.
+- Os demais `.txt` estão vazios. Enquanto estiverem vazios, a página mostra o
+  botão "Ver letra completa no Letras.mus.br" com o link oficial e a lista marca
+  "letra no site oficial". A decisão de publicar as letras protegidas, com base
+  na finalidade educacional e sem fins comerciais, é da Secretaria.
+- **Stand by Me**: cole o original em `stand-by-me.txt` e a tradução em
+  `stand-by-me.traducao.txt`. Aparece o botão "Ver tradução".
+- As páginas pedem o `.txt` sem cache, então a alteração aparece na hora.
 
 ## Alterar cores, textos ou músicas
 

@@ -32,6 +32,32 @@
     return null;
   }
 
+  // ---------- carregamento das letras (arquivos .txt) ----------
+  // Busca musica/letras/<slug>.txt e, se existir, <slug>.traducao.txt.
+  // Campos "letra"/"traducao" preenchidos em letras.js têm prioridade.
+  function buscarTexto(url) {
+    return fetch(url, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.text() : ''; })
+      .catch(function () { return ''; });
+  }
+  function carregarLetra(m, prefixo) {
+    if (m._carregando) return m._carregando;
+    var base = prefixo + 'letras/' + m.slug;
+    var pLetra = (m.letra && m.letra.trim()) ? Promise.resolve(m.letra) : buscarTexto(base + '.txt');
+    var pTrad = (m.traducao && m.traducao.trim()) ? Promise.resolve(m.traducao) : buscarTexto(base + '.traducao.txt');
+    m._carregando = Promise.all([pLetra, pTrad]).then(function (r) {
+      // ignora arquivos que ainda contêm só instruções/comentários ou HTML de erro
+      m.letra = /^\s*</.test(r[0]) ? '' : r[0];
+      m.traducao = /^\s*</.test(r[1]) ? '' : r[1];
+      m._carregada = true;
+      return m;
+    });
+    return m._carregando;
+  }
+  function carregarTodas(prefixo) {
+    return Promise.all(MUSICAS.map(function (m) { return carregarLetra(m, prefixo); }));
+  }
+
   function aplicarCores(m) {
     var r = document.documentElement.style;
     r.setProperty('--cor', m ? m.cor : '#2563eb');
@@ -77,6 +103,9 @@
     var temTrad = m.traducao && m.traducao.trim().length > 0;
     var linkTexto = m.linkTexto || 'Ver letra completa no Letras.mus.br';
 
+    if (!temLetra && !m._carregada) {
+      return '<section class="letra letra-externa" aria-label="Letra da música"><div class="aviso-letra"><p>Carregando a letra…</p></div></section>';
+    }
     if (!temLetra) {
       return (
         '<section class="letra letra-externa" aria-label="Letra da música">' +
@@ -85,7 +114,7 @@
             '<p>A letra desta música ainda não foi cadastrada.<br>' +
             'Toque no botão para abrir a letra oficial e cantar junto!</p>' +
             (m.link ? '<a class="botao" href="' + esc(m.link) + '" target="_blank" rel="noopener">' + esc(linkTexto) + ' ↗</a>' : '') +
-            '<p class="dica-admin">Para cadastrar, edite o campo <code>letra</code> em <code>assets/letras.js</code>.</p>' +
+            '<p class="dica-admin">Para cadastrar, cole a letra no arquivo <code>letras/' + esc(m.slug) + '.txt</code>.</p>' +
           '</div>' +
         '</section>'
       );
@@ -167,7 +196,7 @@
           '<span class="info">' +
             '<strong>' + esc(m.titulo) + '</strong>' +
             '<span>' + esc(m.artista) + '</span>' +
-            '<em>' + esc(m.estilo) + (temLetra ? '' : ' · letra no site oficial') + '</em>' +
+            '<em>' + esc(m.estilo) + ((m._carregada && !temLetra) ? ' · letra no site oficial' : '') + '</em>' +
           '</span>' +
           '<span class="seta">›</span>' +
         '</a>';
@@ -194,6 +223,11 @@
       var slug = decodeURIComponent(location.hash.replace(/^#/, ''));
       var m = slug ? porSlug(slug) : null;
       var selo = document.getElementById('selo');
+      if (m && !m._carregada) {
+        carregarLetra(m, '').then(function () {
+          if (decodeURIComponent(location.hash.replace(/^#/, '')) === m.slug) render();
+        });
+      }
       if (m) {
         aplicarCores(m);
         document.title = m.titulo + ' — ' + m.artista + ' | Músicas SEEDUC';
@@ -212,6 +246,8 @@
     }
     window.addEventListener('hashchange', render);
     render();
+    // pré-carrega todas as letras para marcar na lista quais estão no site oficial
+    carregarTodas('').then(function () { if (!location.hash) render(); });
   };
 
   // ---------- montagem de uma página individual ----------
@@ -227,5 +263,8 @@
     var selo = document.getElementById('selo');
     if (selo) selo.textContent = 'Música ' + m.n + ' de ' + MUSICAS.length;
     el.innerHTML = htmlMusica(m, { modoIndice: false, prefixo: '../' });
+    carregarLetra(m, '../').then(function () {
+      el.innerHTML = htmlMusica(m, { modoIndice: false, prefixo: '../' });
+    });
   };
 })();
