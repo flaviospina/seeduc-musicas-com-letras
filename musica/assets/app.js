@@ -99,8 +99,12 @@
 
   // ---------- HTML da letra ----------
   function htmlLetra(m) {
-    var temLetra = m.letra && m.letra.trim().length > 0;
-    var temTrad = m.traducao && m.traducao.trim().length > 0;
+    var letra = m.letra || '';
+    var traducao = m.traducao || '';
+    // Se só a tradução foi preenchida, mostra a tradução como letra
+    if (!letra.trim() && traducao.trim()) { letra = traducao; traducao = ''; }
+    var temLetra = letra.trim().length > 0;
+    var temTrad = traducao.trim().length > 0;
     var linkTexto = m.linkTexto || 'Ver letra completa no Letras.mus.br';
 
     if (!temLetra && !m._carregada) {
@@ -124,9 +128,9 @@
     if (temTrad) {
       h += '<div class="ferramentas"><button type="button" onclick="alternarTraducao(this)">🇧🇷 Ver tradução</button></div>';
     }
-    h += '<section class="letra letra-original" aria-label="Letra da música">' + letraParaHtml(m.letra) + '</section>';
+    h += '<section class="letra letra-original" aria-label="Letra da música">' + letraParaHtml(letra) + '</section>';
     if (temTrad) {
-      h += '<section class="letra letra-traducao" aria-label="Tradução da letra">' + letraParaHtml(m.traducao) + '</section>';
+      h += '<section class="letra letra-traducao" aria-label="Tradução da letra">' + letraParaHtml(traducao) + '</section>';
     }
     h += '</div>';
     return h;
@@ -188,7 +192,7 @@
       '</div>' +
       '<nav class="lista" aria-label="Lista de músicas">';
     MUSICAS.forEach(function (m) {
-      var temLetra = m.letra && m.letra.trim().length > 0;
+      var temLetra = ((m.letra || '') + (m.traducao || '')).trim().length > 0;
       h +=
         '<a class="item" href="#' + m.slug + '" style="--cor:' + m.cor + ';--cor2:' + m.cor2 + ';">' +
           '<span class="num">' + m.n + '</span>' +
