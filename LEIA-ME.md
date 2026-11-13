@@ -31,6 +31,9 @@ musica/
 │   ├── index.html                  ← folha com o QR geral + 9 QR codes para imprimir
 │   ├── geral.png                   ← QR code GERAL simples (abre a lista de músicas)
 │   ├── geral-com-logo.png          ← QR code GERAL com o logo da SEEDUC no centro (1600 px)
+│   ├── geral-estilizado.svg/.png   ← QR GERAL estilizado (pontos, curvas, gradiente, logo) — vetor e 2000 px
+│   ├── geral-estilizado-1200.png   ← o mesmo em 1200 px (WhatsApp, slides)
+│   ├── telao.html / telao.png      ← arte 1920×1080 (PNG em 3840×2160) para o telão da apresentação
 │   └── <musica>.png                ← um PNG de QR code por música
 ├── canta-canta-minha-gente/        ← 1. Samba — Martinho da Vila
 ├── eu-so-quero-um-xodo/            ← 2. Forró — Dominguinhos
