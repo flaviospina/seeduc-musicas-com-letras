@@ -2,7 +2,7 @@
 
 Site estático com logo da SEEDUC, fundo animado com notas musicais, controle de
 tamanho de letra, impressão, compartilhamento e QR codes. Publicação em
-`https://cecapescs.com.br/musica/`.
+`https://cecapescs.com.br/seeduc/musica/`.
 
 **Como funciona:** o **QR code geral** abre a página principal, que carrega todas
 as músicas do arquivo `assets/letras.js`. Ao tocar em uma música, a letra aparece
@@ -23,7 +23,8 @@ musica/
 │   └── favicon.svg
 ├── qrcodes/
 │   ├── index.html                  ← folha com o QR geral + 9 QR codes para imprimir
-│   ├── geral.png                   ← QR code GERAL (abre a lista de músicas)
+│   ├── geral.png                   ← QR code GERAL simples (abre a lista de músicas)
+│   ├── geral-com-logo.png          ← QR code GERAL com o logo da SEEDUC no centro (1600 px)
 │   └── <musica>.png                ← um PNG de QR code por música
 ├── canta-canta-minha-gente/        ← 1. Samba — Martinho da Vila
 ├── eu-so-quero-um-xodo/            ← 2. Forró — Dominguinhos
@@ -39,17 +40,17 @@ musica/
 ```
 
 Cada pasta de música contém `index.html` (página individual, que lê a letra de
-`assets/letras.js`) e `qrcode.png` (aponta para `https://cecapescs.com.br/musica/<pasta>/`).
+`assets/letras.js`) e `qrcode.png` (aponta para `https://cecapescs.com.br/seeduc/musica/<pasta>/`).
 
 ## Como publicar (cPanel, sem terminal)
 
 1. Compacte a pasta `musica` em um arquivo `musica.zip`.
-2. No cPanel → **Gerenciador de Arquivos**, entre em `public_html` (raiz do
-   domínio `cecapescs.com.br`).
-3. Envie o `musica.zip` e use **Extrair**. Deve ficar `public_html/musica/index.html`.
-4. Teste em `https://cecapescs.com.br/musica/` e em uma música, por exemplo
-   `https://cecapescs.com.br/musica/peneirei-fuba/`.
-5. Abra `https://cecapescs.com.br/musica/qrcodes/` e clique em **Imprimir folha**
+2. No cPanel → **Gerenciador de Arquivos**, entre em `public_html/seeduc`
+   (crie a pasta `seeduc` se ainda não existir).
+3. Envie o `musica.zip` e use **Extrair**. Deve ficar `public_html/seeduc/musica/index.html`.
+4. Teste em `https://cecapescs.com.br/seeduc/musica/` e em uma música, por exemplo
+   `https://cecapescs.com.br/seeduc/musica/peneirei-fuba/`.
+5. Abra `https://cecapescs.com.br/seeduc/musica/qrcodes/` e clique em **Imprimir folha**
    para gerar os cartões: o **QR geral** (lista completa) e um por música.
 
 Os QR codes só funcionam depois da publicação, pois apontam para o domínio.

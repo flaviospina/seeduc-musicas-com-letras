@@ -7,7 +7,7 @@
   'use strict';
 
   var MUSICAS = window.MUSICAS || [];
-  var BASE_URL = 'https://cecapescs.com.br/musica/';
+  var BASE_URL = 'https://cecapescs.com.br/seeduc/musica/';
 
   // ---------- utilidades ----------
   function esc(txt) {
@@ -176,7 +176,7 @@
       '</nav>' +
       '<footer class="rodape">' +
         '<div class="qr">' +
-          '<img src="qrcodes/geral.png" alt="QR Code geral do repertório" width="120" height="120">' +
+          '<img src="qrcodes/geral-com-logo.png" alt="QR Code geral do repertório" width="120" height="120">' +
           '<small>QR code geral: abre esta lista</small>' +
         '</div>' +
         '<div class="rodape-texto">' +

@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 RAIZ = Path(__file__).resolve().parent.parent
 SAIDA = RAIZ / "musica"
-DOMINIO = "https://cecapescs.com.br/musica/"
+DOMINIO = "https://cecapescs.com.br/seeduc/musica/"
 
 MUSICAS = [
     {
@@ -199,7 +199,7 @@ def pagina_qrcodes():
         <div class="qr-estilo">🎵 QR code geral</div>
         <h2>Músicas com Letras</h2>
         <p class="qr-artista">Abre a lista completa — toque na música para ver a letra</p>
-        <img src="geral.png" alt="QR Code: lista de músicas" class="qr-img">
+        <img src="geral-com-logo.png" alt="QR Code: lista de músicas" class="qr-img">
         <p class="qr-url">{DOMINIO}</p>
       </article>"""
     corpo = geral + "\n" + "\n".join(cartoes)
